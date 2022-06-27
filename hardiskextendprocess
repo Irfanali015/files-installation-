@@ -1,0 +1,531 @@
+[root@github ~]# ll /r-bash: cannot create temp file for here-document: No space left on device
+-bash: cannot create temp file for here-document: No space left on device
+
+ls: cannot access '/r': No such file or directory
+[root@github ~]# ls /root
+anaconda-ks.cfg  coss.yml  Desktop  Documents  Downloads  Music  original-ks.cfg  Pictures  Public  Templates  Videos
+[root@github ~]# ls /root/Downloads
+rhel-8.4-x86_64-dvd.iso
+[root@github ~]# df -0hT
+df: invalid option -- '0'
+Try 'df --help' for more information.
+[root@github ~]# 
+[root@github ~]# df -hT
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  1.4G     0  1.4G   0% /dev
+tmpfs          tmpfs     1.4G     0  1.4G   0% /dev/shm
+tmpfs          tmpfs     1.4G  9.4M  1.4G   1% /run
+tmpfs          tmpfs     1.4G     0  1.4G   0% /sys/fs/cgroup
+/dev/nvme0n1p3 xfs        27G   27G   20K 100% /
+/dev/nvme0n1p1 xfs       295M  188M  107M  64% /boot
+tmpfs          tmpfs     280M   12K  280M   1% /run/user/1000
+/dev/sr0       iso9660    11G   11G     0 100% /run/media/irfan/RHEL-8-6-0-BaseOS-x86_64
+[root@github ~]# ls /root/Downloads
+rhel-8.4-x86_64-dvd.iso
+[root@github ~]# rm -rf /root/Downloads-bash: cannot create temp file for here-document: No space left on device
+-bash: cannot create temp file for here-document: No space left on device
+                 ls
+rhel-8.4-x86_64-dvd.iso
+[root@github ~]# ls /root/Downloads/rhel-8.4-x86_64-dvd.iso
+/root/Downloads/rhel-8.4-x86_64-dvd.iso
+[root@github ~]# rm -rf /root/Downloads/rhel-8.4-x86_64-dvd.iso
+[root@github ~]# ls /root/
+anaconda-ks.cfg  .bashrc          Desktop/         .ICEauthority    Pictures/        Videos/
+.ansible/        .cache/          Documents/       .local/          .pki/            .viminfo
+.bash_history    .config/         Downloads/       .mozilla/        Public/          .xauth6h8d0z
+.bash_logout     coss.yml         .esd_auth        Music/           .tcshrc          .xauth7k8P6d
+.bash_profile    .cshrc           .git/            original-ks.cfg  Templates/       .xauthabmkir
+[root@github ~]# ls /root/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[root@github ~]# df -hT
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  1.4G     0  1.4G   0% /dev
+tmpfs          tmpfs     1.4G     0  1.4G   0% /dev/shm
+tmpfs          tmpfs     1.4G  9.4M  1.4G   1% /run
+tmpfs          tmpfs     1.4G     0  1.4G   0% /sys/fs/cgroup
+/dev/nvme0n1p3 xfs        27G   18G  9.5G  65% /
+/dev/nvme0n1p1 xfs       295M  188M  107M  64% /boot
+tmpfs          tmpfs     280M   12K  280M   1% /run/user/1000
+/dev/sr0       iso9660    11G   11G     0 100% /run/media/irfan/RHEL-8-6-0-BaseOS-x86_64
+[root@github ~]# 
+[root@github ~]# cat /proc/partitions 
+major minor  #blocks  name
+
+ 259        0   44040192 nvme0n1
+ 259        1     307200 nvme0n1p1
+ 259        2    3145728 nvme0n1p2
+ 259        3   28003328 nvme0n1p3
+   8        0  104857600 sda
+  11        0   11197440 sr0
+[root@github ~]# fdisk /dev/nvme0n1
+/dev/nvme0n1    /dev/nvme0n1p1  /dev/nvme0n1p2  /dev/nvme0n1p3  
+[root@github ~]# lsblk
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda           8:0    0  100G  0 disk 
+sr0          11:0    1 10.7G  0 rom  /run/media/irfan/RHEL-8-6-0-BaseOS-x86_64
+nvme0n1     259:0    0   42G  0 disk 
+├─nvme0n1p1 259:1    0  300M  0 part /boot
+├─nvme0n1p2 259:2    0    3G  0 part [SWAP]
+└─nvme0n1p3 259:3    0 26.7G  0 part /
+[root@github ~]# fdisk /dev/nvme0n1
+
+Welcome to fdisk (util-linux 2.32.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): p
+Disk /dev/nvme0n1: 42 GiB, 45097156608 bytes, 88080384 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xb7538419
+
+Device         Boot   Start      End  Sectors  Size Id Type
+/dev/nvme0n1p1 *       2048   616447   614400  300M 83 Linux
+/dev/nvme0n1p2       616448  6907903  6291456    3G 82 Linux swap / Solaris
+/dev/nvme0n1p3      6907904 62914559 56006656 26.7G 83 Linux
+
+Command (m for help): n
+Partition type
+   p   primary (3 primary, 0 extended, 1 free)
+   e   extended (container for logical partitions)
+Select (default e): p
+
+Selected partition 4
+First sector (62914560-88080383, default 62914560): 
+Last sector, +sectors or +size{K,M,G,T,P} (62914560-88080383, default 88080383): 
+
+Created a new partition 4 of type 'Linux' and of size 12 GiB.
+
+Command (m for help): p
+Disk /dev/nvme0n1: 42 GiB, 45097156608 bytes, 88080384 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xb7538419
+
+Device         Boot    Start      End  Sectors  Size Id Type
+/dev/nvme0n1p1 *        2048   616447   614400  300M 83 Linux
+/dev/nvme0n1p2        616448  6907903  6291456    3G 82 Linux swap / Solaris
+/dev/nvme0n1p3       6907904 62914559 56006656 26.7G 83 Linux
+/dev/nvme0n1p4      62914560 88080383 25165824   12G 83 Linux
+
+Command (m for help): q
+
+[root@github ~]# pvs
+[root@github ~]# vgs
+[root@github ~]# lv
+bash: lv: command not found...
+lvs
+^C
+[root@github ~]# lvs
+[root@github ~]# lsblk
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda           8:0    0  100G  0 disk 
+sr0          11:0    1 10.7G  0 rom  /run/media/irfan/RHEL-8-6-0-BaseOS-x86_64
+nvme0n1     259:0    0   42G  0 disk 
+├─nvme0n1p1 259:1    0  300M  0 part /boot
+├─nvme0n1p2 259:2    0    3G  0 part [SWAP]
+└─nvme0n1p3 259:3    0 26.7G  0 part /
+[root@github ~]# fdisk /dev/sda
+
+Welcome to fdisk (util-linux 2.32.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS disklabel with disk identifier 0x8962059a.
+
+Command (m for help): p
+Disk /dev/sda: 100 GiB, 107374182400 bytes, 209715200 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x8962059a
+
+Command (m for help): n
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): e
+Partition number (1-4, default 1): 
+First sector (2048-209715199, default 2048): 
+Last sector, +sectors or +size{K,M,G,T,P} (2048-209715199, default 209715199): 
+
+Created a new partition 1 of type 'Extended' and of size 100 GiB.
+
+Command (m for help): n
+All space for primary partitions is in use.
+Adding logical partition 5
+First sector (4096-209715199, default 4096): 
+Last sector, +sectors or +size{K,M,G,T,P} (4096-209715199, default 209715199): 
+
+Created a new partition 5 of type 'Linux' and of size 100 GiB.
+
+Command (m for help): t
+Partition number (1,5, default 5): 
+Hex code (type L to list all codes): 8e
+
+Changed type of partition 'Linux' to 'Linux LVM'.
+
+Command (m for help): p
+Disk /dev/sda: 100 GiB, 107374182400 bytes, 209715200 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x8962059a
+
+Device     Boot Start       End   Sectors  Size Id Type
+/dev/sda1        2048 209715199 209713152  100G  5 Extended
+/dev/sda5        4096 209715199 209711104  100G 8e Linux LVM
+
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+[root@github ~]# udevadm settle 
+[root@github ~]# pvcreate /dev/sda
+sda   sda1  sda5  
+[root@github ~]# pvcreate /dev/sda
+sda   sda1  sda5  
+[root@github ~]# pvcreate /dev/sda5
+  Physical volume "/dev/sda5" successfully created.
+[root@github ~]# vgcreate vg1 /dev/sda5 
+  Volume group "vg1" successfully created
+[root@github ~]# lvcreate -n lv1 -l 100%FREE  vg1
+  Logical volume "lv1" created.
+[root@github ~]# lvs
+  LV   VG  Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  lv1  vg1 -wi-a----- <100.00g                                                    
+[root@github ~]# mkfs.xfs /dev/mapper/vg1-lv1 
+meta-data=/dev/mapper/vg1-lv1    isize=512    agcount=4, agsize=6553344 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1    bigtime=0 inobtcount=0
+data     =                       bsize=4096   blocks=26213376, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=12799, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[root@github ~]# mkdir /mnt/lv1
+[root@github ~]# blkid
+/dev/nvme0n1: PTUUID="b7538419" PTTYPE="dos"
+/dev/nvme0n1p1: UUID="1be82057-7714-4946-ad0d-5d8f8b18e63f" BLOCK_SIZE="512" TYPE="xfs" PARTUUID="b7538419-01"
+/dev/nvme0n1p2: UUID="c6eaa83b-e659-4592-93d2-61f0250b03f1" TYPE="swap" PARTUUID="b7538419-02"
+/dev/nvme0n1p3: UUID="c29b651d-92c3-4a86-bce3-4ccd266a5cfa" BLOCK_SIZE="512" TYPE="xfs" PARTUUID="b7538419-03"
+/dev/sda5: UUID="Iprx22-SFHh-XhQL-qGYC-QdcS-QVvS-61Cf3P" TYPE="LVM2_member" PARTUUID="8962059a-05"
+/dev/sr0: BLOCK_SIZE="2048" UUID="2022-04-20-16-41-14-00" LABEL="RHEL-8-6-0-BaseOS-x86_64" TYPE="iso9660" PTUUID="3f7fc886" PTTYPE="dos"
+/dev/mapper/vg1-lv1: UUID="359f7e2e-f17a-4cdc-bba7-83e392f6c4db" BLOCK_SIZE="512" TYPE="xfs"
+[root@github ~]# echo "/dev/mapper/vg1-lv1 /mnt/lv1 xfs defaults 0 0" >>/etc/fstab 
+[root@github ~]# mount -a
+[root@github ~]# df -hT
+Filesystem          Type      Size  Used Avail Use% Mounted on
+devtmpfs            devtmpfs  1.4G     0  1.4G   0% /dev
+tmpfs               tmpfs     1.4G     0  1.4G   0% /dev/shm
+tmpfs               tmpfs     1.4G  9.5M  1.4G   1% /run
+tmpfs               tmpfs     1.4G     0  1.4G   0% /sys/fs/cgroup
+/dev/nvme0n1p3      xfs        27G   18G  9.5G  65% /
+/dev/nvme0n1p1      xfs       295M  188M  107M  64% /boot
+tmpfs               tmpfs     280M   16K  280M   1% /run/user/1000
+/dev/sr0            iso9660    11G   11G     0 100% /run/media/irfan/RHEL-8-6-0-BaseOS-x86_64
+/dev/mapper/vg1-lv1 xfs       100G  746M  100G   1% /mnt/lv1
+[root@github ~]# fdisk /dev/nvme0n1
+
+Welcome to fdisk (util-linux 2.32.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): p
+Disk /dev/nvme0n1: 42 GiB, 45097156608 bytes, 88080384 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xb7538419
+
+Device         Boot   Start      End  Sectors  Size Id Type
+/dev/nvme0n1p1 *       2048   616447   614400  300M 83 Linux
+/dev/nvme0n1p2       616448  6907903  6291456    3G 82 Linux swap / Solaris
+/dev/nvme0n1p3      6907904 62914559 56006656 26.7G 83 Linux
+
+Command (m for help): n
+Partition type
+   p   primary (3 primary, 0 extended, 1 free)
+   e   extended (container for logical partitions)
+Select (default e): p
+
+Selected partition 4
+First sector (62914560-88080383, default 62914560): 
+Last sector, +sectors or +size{K,M,G,T,P} (62914560-88080383, default 88080383): 
+
+Created a new partition 4 of type 'Linux' and of size 12 GiB.
+
+Command (m for help): p
+Disk /dev/nvme0n1: 42 GiB, 45097156608 bytes, 88080384 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xb7538419
+
+Device         Boot    Start      End  Sectors  Size Id Type
+/dev/nvme0n1p1 *        2048   616447   614400  300M 83 Linux
+/dev/nvme0n1p2        616448  6907903  6291456    3G 82 Linux swap / Solaris
+/dev/nvme0n1p3       6907904 62914559 56006656 26.7G 83 Linux
+/dev/nvme0n1p4      62914560 88080383 25165824   12G 83 Linux
+
+Command (m for help): t
+Partition number (1-4, default 4): 
+Hex code (type L to list all codes): 8e
+
+Changed type of partition 'Linux' to 'Linux LVM'.
+
+Command (m for help): p
+Disk /dev/nvme0n1: 42 GiB, 45097156608 bytes, 88080384 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xb7538419
+
+Device         Boot    Start      End  Sectors  Size Id Type
+/dev/nvme0n1p1 *        2048   616447   614400  300M 83 Linux
+/dev/nvme0n1p2        616448  6907903  6291456    3G 82 Linux swap / Solaris
+/dev/nvme0n1p3       6907904 62914559 56006656 26.7G 83 Linux
+/dev/nvme0n1p4      62914560 88080383 25165824   12G 8e Linux LVM
+
+Command (m for help): w
+The partition table has been altered.
+Syncing disks.
+
+[root@github ~]# !ude
+udevadm settle 
+[root@github ~]# pvcreate /dev/nvme0
+nvme0      nvme0n1    nvme0n1p1  nvme0n1p2  nvme0n1p3  nvme0n1p4  
+[root@github ~]# pvcreate /dev/nvme0n1p4 
+  Physical volume "/dev/nvme0n1p4" successfully created.
+[root@github ~]# vgextend vg1 /dev/nvme0n1p4
+  Volume group "vg1" successfully extended
+[root@github ~]# vgs
+  VG  #PV #LV #SN Attr   VSize   VFree  
+  vg1   2   1   0 wz--n- 111.99g <12.00g
+[root@github ~]# 
+[root@github ~]# pvs]
+bash: pvs]: command not found...
+Similar command is: 'pvs'
+[root@github ~]# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[root@github ~]# pvs
+  PV             VG  Fmt  Attr PSize    PFree  
+  /dev/nvme0n1p4 vg1 lvm2 a--   <12.00g <12.00g
+  /dev/sda5      vg1 lvm2 a--  <100.00g      0 
+[root@github ~]# vgdisplay vg1
+  --- Volume group ---
+  VG Name               vg1
+  System ID             
+  Format                lvm2
+  Metadata Areas        2
+  Metadata Sequence No  3
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                1
+  Open LV               1
+  Max PV                0
+  Cur PV                2
+  Act PV                2
+  VG Size               111.99 GiB
+  PE Size               4.00 MiB
+  Total PE              28670
+  Alloc PE / Size       25599 / <100.00 GiB
+  Free  PE / Size       3071 / <12.00 GiB
+  VG UUID               PU11A3-ZtK6-mFLf-rrIi-rlrE-F6qH-T0Q9Vv
+   
+[root@github ~]# bc
+bc 1.07.1
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2017 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'. 
+12*1024
+12288
+12288/4
+3072
+3072*4
+12288
+^C
+(interrupt) Exiting bc.
+[root@github ~]# #lvextend -l +3072 /dev/vg1/lv1
+[root@github ~]# lvs
+  LV   VG  Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  lv1  vg1 -wi-ao---- <100.00g                                                    
+[root@github ~]# lvextend -l +3072 /dev/vg1/lv1
+  Insufficient free space: 3072 extents needed, but only 3071 available
+[root@github ~]# lvextend -l +3071 /dev/vg1/lv1
+  Size of logical volume vg1/lv1 changed from <100.00 GiB (25599 extents) to 111.99 GiB (28670 extents).
+  Logical volume vg1/lv1 successfully resized.
+[root@github ~]# lvs
+  LV   VG  Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  lv1  vg1 -wi-ao---- 111.99g                                                    
+[root@github ~]# vg1vg1^C
+[root@github ~]# history
+    1  cd Downloads
+    2  ll
+    3  cd
+    4  ll
+    5  exit
+    6  yum repolist
+    7  cat /etc/yum.repos.d/local.repo
+    8  ip a s
+    9  yum repo list
+   10  yum repolist
+   11  ip a s
+   12  ip a 
+   13  yum repolist
+   14  cat /etc/yum.repos.d/local.repo
+   15  dnf install python3-pip
+   16  pip3 install ansible --v ser
+   17  ansible --version
+   18  yum list ansible
+   19  dnf insatll ansible
+   20  yum install ansible
+   21  dnf update -y
+   22  c
+   23  cd
+   24  ll
+   25  cat coss.yml
+   26  vim coss.yml
+   27  ansible-playbook coss.yml --syntax-check
+   28  ip a
+   29  ll
+   30  vim /etc/ansible/hosts
+   31  ansible-playbook coss.yml --syntax-check
+   32  ansible-playbook coss.yml 
+   33  ll
+   34  pwd
+   35  ls
+   36  git init
+   37  git add .
+   38  git status
+   39  reboot
+   40  xfs_growfs
+   41  lsblk
+   42  df
+   43  df -h
+   44  free -m
+   45  cd /tmp
+   46  ll
+   47  cd ..
+   48  cd
+   49  du -sh /tmp
+   50  lsblk
+   51  df -hT
+   52  umount /
+   53  lsblk
+   54  df -hT
+   55  poweroff 
+   56  du -h /root
+   57  ll /r
+   58  ls /root
+   59  ls /root/Downloads
+   60  df -0hT
+   61  df -hT
+   62  ls /root/Downloads
+   63  ls /root/Downloads/rhel-8.4-x86_64-dvd.iso
+   64  rm -rf /root/Downloads/rhel-8.4-x86_64-dvd.iso
+   65  df -hT
+   66  cat /proc/partitions 
+   67  lsblk
+   68  fdisk /dev/nvme0n1
+   69  pvs
+   70  vgs
+   71  lv
+   72  lvs
+   73  lsblk
+   74  fdisk /dev/sda
+   75  udevadm settle 
+   76  pvcreate /dev/sda5
+   77  vgcreate vg1 /dev/sda5 
+   78  lvcreate -n lv1 -l 100%FREE  vg1
+   79  lvs
+   80  mkfs.xfs /dev/mapper/vg1-lv1 
+   81  mkdir /mnt/lv1
+   82  blkid
+   83  echo "/dev/mapper/vg1-lv1 /mnt/lv1 xfs defaults 0 0" >>/etc/fstab 
+   84  mount -a
+   85  df -hT
+   86  fdisk /dev/nvme0n1
+   87  udevadm settle 
+   88  pvcreate /dev/nvme0n1p4 
+   89  vgextend vg1 /dev/nvme0n1p4
+   90  vgs
+   91  pvs]
+   92  pvs
+   93  vgdisplay vg1
+   94  bc
+   95  #lvextend -l +3072 /dev/vg1/lv1
+   96  lvs
